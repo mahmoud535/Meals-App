@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:id="@+id/root_home"
+    tools:context=".presentation.ui.fragment.MealsListFragment">
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/loading_gif"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:src="@drawable/loading_gif"
+        android:visibility="gone"/>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:layout_marginTop="@dimen/_80sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp_autoscroll"
+            android:layout_width="@dimen/_295sdp"
+            android:layout_height="160dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_10sdp" />
+
+        <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+            android:id="@+id/SliderDots"
+            android:layout_width="@dimen/_82sdp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/_20sdp"
+            app:dotsColor="@color/Red"
+            app:dotsCornerRadius="8dp"
+            app:dotsSize="10dp"
+            app:dotsSpacing="5dp"
+            app:dotsStrokeColor="@color/colorSecondaryText"
+            app:dotsWidthFactor="1"
+            app:progressMode="true"
+            app:selectedDotColor="@color/Red" />
+    </RelativeLayout>
+<!--    <androidx.cardview.widget.CardView-->
+<!--        android:id="@+id/action_cart"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="15dp"-->
+<!--        android:layout_marginEnd="15dp"-->
+<!--        app:cardCornerRadius="18dp"-->
+<!--        android:layout_marginTop="@dimen/_40sdp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textView3">-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/mealImageView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="@dimen/_130sdp"-->
+<!--            android:adjustViewBounds="true"-->
+<!--            android:scaleType="centerCrop"-->
+<!--            android:src="@drawable/img16"-->
+<!--            app:shapeAppearanceOverlay="@style/border" />-->
+
+<!--    </androidx.cardview.widget.CardView>-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mealRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_40sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
+        tools:listitem="@layout/meal_item_layout" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:text="Today meals"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_16sdp"
+        app:layout_constraintBottom_toTopOf="@+id/mealRecyclerView"
+        app:layout_constraintStart_toStartOf="@+id/mealRecyclerView" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="What would you like to eat today"
+        android:textColor="@color/black"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_4sdp"
+        android:textSize="@dimen/_16sdp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
+        app:layout_constraintStart_toStartOf="@+id/relativeLayout"
+        app:layout_constraintVertical_bias="0.787" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Meals List"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:textStyle="bold"
+        android:textColor="#E91E63"
+        android:textSize="@dimen/_20sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/android"
+        tools:layout_editor_absoluteX="314dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

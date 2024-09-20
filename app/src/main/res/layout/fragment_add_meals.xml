@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:padding="16dp">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/mealImageView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:contentDescription="Meal Image"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img15"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/mealTitleInput"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:background="@drawable/rounded_edittext_register_login"
+        android:hint="Meal Title"
+        android:paddingLeft="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/mealImageView"
+        app:layout_constraintStart_toStartOf="@+id/mealImageView"
+        app:layout_constraintTop_toBottomOf="@+id/mealImageView" />
+
+    <EditText
+        android:id="@+id/mealDescriptionInput"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:background="@drawable/rounded_edittext_register_login"
+        android:hint="Meal Description"
+        android:paddingLeft="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/mealTitleInput"
+        app:layout_constraintStart_toStartOf="@+id/mealTitleInput"
+        app:layout_constraintTop_toBottomOf="@+id/mealTitleInput" />
+
+    <Spinner
+        android:id="@+id/day_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:entries="@array/days_of_week"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:paddingLeft="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/mealDescriptionInput"
+        app:layout_constraintStart_toStartOf="@+id/mealDescriptionInput"
+        app:layout_constraintTop_toBottomOf="@+id/mealDescriptionInput" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/addMealButton"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginTop="@dimen/_35sdp"
+        android:background="@drawable/button_background"
+        android:text="Add Meal"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/day_spinner"
+        app:layout_constraintStart_toStartOf="@+id/day_spinner"
+        app:layout_constraintTop_toBottomOf="@+id/day_spinner" />
+</androidx.constraintlayout.widget.ConstraintLayout>
