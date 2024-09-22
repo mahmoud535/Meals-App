@@ -1,5 +1,6 @@
 package com.example.mealsapp.presentation.ui.fragment
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -42,7 +43,10 @@ class MealDetailsFragment : Fragment() {
             txtTitle.text = meal.name
             txtDes.text = meal.description
             txtDay.text = meal.day
-            button.setOnClickListener {  mealDetailsViewModel.addToCart(meal)  }
+            button.setOnClickListener {
+                val userEmail = getUserEmail() // Retrieve the user's email
+                mealDetailsViewModel.addToCart(meal, userEmail!!)
+            }
         }
         Glide.with(this).load(meal.imageUri).into(binding.imageView)
     }
@@ -66,5 +70,10 @@ class MealDetailsFragment : Fragment() {
 
     private fun showToast(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun getUserEmail(): String? {
+        val sharedPrefs = requireContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+        return sharedPrefs.getString("user_email", null)
     }
 }

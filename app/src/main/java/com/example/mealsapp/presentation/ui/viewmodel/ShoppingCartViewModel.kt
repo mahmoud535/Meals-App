@@ -20,9 +20,9 @@ class ShoppingCartViewModel @Inject constructor(
     private val _cartItems = MutableStateFlow<List<ShoppingCartItem>?>(emptyList())
     val cartItems: StateFlow<List<ShoppingCartItem>?> get() = _cartItems
 
-    fun loadCartItems() {
+    fun loadCartItems(userEmail: String) { // Add userEmail parameter
         viewModelScope.launch {
-            _cartItems.value = getCartItemsUseCase()
+            _cartItems.value = getCartItemsUseCase(userEmail) // Pass userEmail to use case
         }
     }
 }

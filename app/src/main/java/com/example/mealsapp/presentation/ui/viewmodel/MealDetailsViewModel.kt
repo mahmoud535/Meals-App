@@ -24,16 +24,17 @@ class MealDetailsViewModel @Inject constructor(
     private val _cartState = MutableStateFlow<CartState>(CartState.Idle)
     val cartState: StateFlow<CartState> = _cartState
 
-    fun addToCart(meal: Meal) {
+    fun addToCart(meal: Meal, userEmail: String) {
         viewModelScope.launch {
             try {
-                val cartItems = getCartItemsUseCase()
+                val cartItems = getCartItemsUseCase(userEmail) // Pass userEmail here
                 if (cartItems.isEmpty()) {
                     val cartItem = ShoppingCartItem(
                         mealId = meal.id,
                         name = meal.name,
                         description = meal.description,
-                        imageUri = meal.imageUri
+                        imageUri = meal.imageUri,
+                        userEmail = userEmail
                     )
                     addToCartUseCase(cartItem)
                     _cartState.value = CartState.Success

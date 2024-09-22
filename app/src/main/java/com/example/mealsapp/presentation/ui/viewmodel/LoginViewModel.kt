@@ -30,10 +30,10 @@ class LoginViewModel @Inject constructor(
             if (existingUser == null) {
                 val newUser = User(email = email, password = password, role = selectedRole)
                 insertUserUseCase(newUser)
-                _loginState.value = LoginState.Success(selectedRole)
+                _loginState.value = LoginState.Success(selectedRole, email)
             } else {
                 if (existingUser.role == selectedRole) {
-                    _loginState.value = LoginState.Success(selectedRole)
+                    _loginState.value = LoginState.Success(selectedRole, email)
                 } else {
                     _loginState.value = LoginState.Error("Cannot log in as $selectedRole with the same email")
                 }
@@ -42,8 +42,10 @@ class LoginViewModel @Inject constructor(
     }
 }
 
+
+
 sealed class LoginState {
     data object Idle : LoginState()
-    data class Success(val role: String) : LoginState()
+    data class Success(val role: String, val email: String) : LoginState() // Add email here
     data class Error(val message: String) : LoginState()
 }

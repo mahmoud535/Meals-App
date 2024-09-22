@@ -17,8 +17,8 @@ class MealRepositoryImpl @Inject constructor(private val mealDatabase: MealDatab
         mealDatabase.mealDao().insertMeal(meal)
     }
 
-    override suspend fun getCartItems(): List<ShoppingCartItem> {
-        return   mealDatabase.mealDao().getAllCartItems()
+    override suspend fun getCartItems(userEmail: String): List<ShoppingCartItem> { // Add userEmail parameter
+        return mealDatabase.mealDao().getAllCartItems(userEmail) // Pass userEmail to DAO
     }
 
     override suspend fun addToCart(item: ShoppingCartItem) {

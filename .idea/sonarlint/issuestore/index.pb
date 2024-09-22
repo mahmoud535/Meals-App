@@ -85,3 +85,5 @@ z
 Japp/src/main/java/com/example/mealsapp/domain/usecase/InsertUserUseCase.kt,a\3\a364b80fa8d54bf2fad8519ab5894e12c4917ac7
 q
 Aapp/src/main/java/com/example/mealsapp/data/local/MealDatabase.kt,9\7\97bf8c9f1106f7629e7dcbc8d3f823a7ab3a1cde
+„
+Tapp/src/main/java/com/example/mealsapp/domain/usecase/GetLoggedInUserEmailUseCase.kt,7\1\711477614cc9f498613b29d6b8e14a3d8b6fce3f

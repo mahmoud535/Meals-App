@@ -1,5 +1,6 @@
 package com.example.mealsapp.presentation.ui.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -42,6 +43,12 @@ class ShoppingCardFragment : Fragment() {
                 adapter.submitList(cartItems)
             }
         }
-        shoppingCartViewModel.loadCartItems()
+        val userEmail = getUserEmail() // Retrieve user email
+        shoppingCartViewModel.loadCartItems(userEmail!!) // Pass userEmail to
+    }
+
+    private fun getUserEmail(): String? {
+        val sharedPrefs = requireContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+        return sharedPrefs.getString("user_email", null)
     }
 }

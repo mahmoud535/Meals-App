@@ -1,5 +1,6 @@
 package com.example.mealsapp.presentation.ui.fragment
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -68,7 +69,9 @@ class LoginFragment : Fragment() {
 
     private fun handleLoginState(state: LoginState) {
         when (state) {
-            is LoginState.Success -> { navigateBasedOnRole(state.role) }
+            is LoginState.Success -> {
+                saveUserEmail(state.email)
+                navigateBasedOnRole(state.role) }
             is LoginState.Error -> { showToast(state.message) }
             LoginState.Idle -> {}
         }
@@ -88,5 +91,13 @@ class LoginFragment : Fragment() {
     private fun showToast(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
+
+    private fun saveUserEmail(email: String) {
+        val sharedPrefs = requireContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+        val editor = sharedPrefs.edit()
+        editor.putString("user_email", email)
+        editor.apply()
+    }
+
 }
 

@@ -9,5 +9,6 @@ data class ShoppingCartItem(
     val mealId: Int,
     val name: String,
     val description: String,
-    val imageUri: String
+    val imageUri: String,
+    val userEmail: String
 )
