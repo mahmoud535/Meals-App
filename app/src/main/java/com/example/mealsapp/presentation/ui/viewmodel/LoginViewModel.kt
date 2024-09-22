@@ -46,6 +46,6 @@ class LoginViewModel @Inject constructor(
 
 sealed class LoginState {
     data object Idle : LoginState()
-    data class Success(val role: String, val email: String) : LoginState() // Add email here
+    data class Success(val role: String, val email: String) : LoginState()
     data class Error(val message: String) : LoginState()
 }

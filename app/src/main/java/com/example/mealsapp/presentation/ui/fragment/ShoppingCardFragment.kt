@@ -43,8 +43,8 @@ class ShoppingCardFragment : Fragment() {
                 adapter.submitList(cartItems)
             }
         }
-        val userEmail = getUserEmail() // Retrieve user email
-        shoppingCartViewModel.loadCartItems(userEmail!!) // Pass userEmail to
+        val userEmail = getUserEmail()
+        shoppingCartViewModel.loadCartItems(userEmail!!)
     }
 
     private fun getUserEmail(): String? {

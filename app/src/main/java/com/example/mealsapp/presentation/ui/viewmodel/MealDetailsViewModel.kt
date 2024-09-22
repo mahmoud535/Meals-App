@@ -27,7 +27,7 @@ class MealDetailsViewModel @Inject constructor(
     fun addToCart(meal: Meal, userEmail: String) {
         viewModelScope.launch {
             try {
-                val cartItems = getCartItemsUseCase(userEmail) // Pass userEmail here
+                val cartItems = getCartItemsUseCase(userEmail)
                 if (cartItems.isEmpty()) {
                     val cartItem = ShoppingCartItem(
                         mealId = meal.id,

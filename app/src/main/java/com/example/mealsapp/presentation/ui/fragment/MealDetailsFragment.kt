@@ -44,7 +44,7 @@ class MealDetailsFragment : Fragment() {
             txtDes.text = meal.description
             txtDay.text = meal.day
             button.setOnClickListener {
-                val userEmail = getUserEmail() // Retrieve the user's email
+                val userEmail = getUserEmail()
                 mealDetailsViewModel.addToCart(meal, userEmail!!)
             }
         }

@@ -18,7 +18,7 @@ interface MealDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addItemToCart(item: ShoppingCartItem)
 
-    @Query("SELECT * FROM shoppingCart WHERE userEmail = :userEmail") // Add userEmail to query
+    @Query("SELECT * FROM shoppingCart WHERE userEmail = :userEmail")
     suspend fun getAllCartItems(userEmail: String): List<ShoppingCartItem>
 
     @Query("DELETE FROM shoppingCart WHERE id = :itemId")
