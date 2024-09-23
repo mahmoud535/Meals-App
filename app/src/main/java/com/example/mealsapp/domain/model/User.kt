@@ -7,6 +7,6 @@ import androidx.room.PrimaryKey
 data class User(
     @PrimaryKey val email: String,
     val password: String,
-    val role: String,
+    val role: String, // "Guest" or "admin"
 //    val loggedIn: Boolean = false
 )

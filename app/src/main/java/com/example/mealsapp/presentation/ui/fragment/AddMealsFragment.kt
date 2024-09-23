@@ -77,6 +77,10 @@ class AddMealsFragment : Fragment() {
         navigateToMealList()
     }
 
+    private fun navigateToMealList() {
+        findNavController().navigate(R.id.action_navigation_add_meals_to_navigation_meals_list)
+    }
+
     private fun openImageChooser() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
@@ -96,10 +100,6 @@ class AddMealsFragment : Fragment() {
 
     private fun showToast(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-    }
-
-    private fun navigateToMealList() {
-        findNavController().navigate(R.id.action_navigation_add_meals_to_navigation_meals_list)
     }
 
     companion object {
