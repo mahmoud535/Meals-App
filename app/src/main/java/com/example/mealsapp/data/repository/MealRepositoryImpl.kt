@@ -1,7 +1,6 @@
 package com.example.mealsapp.data.repository
 
 import com.example.mealsapp.R
-import com.example.mealsapp.data.local.MealDao
 import com.example.mealsapp.data.local.MealDatabase
 import com.example.mealsapp.domain.model.Meal
 import com.example.mealsapp.domain.model.ShoppingCartItem
@@ -14,11 +13,11 @@ class MealRepositoryImpl @Inject constructor(private val mealDatabase: MealDatab
     }
 
     override suspend fun insertMeal(meal: Meal) {
-        mealDatabase.mealDao().insertMeal(meal)
+        mealDatabase.mealDao().addMeal(meal)
     }
 
-    override suspend fun getCartItems(userEmail: String): List<ShoppingCartItem> { // Add userEmail parameter
-        return mealDatabase.mealDao().getAllCartItems(userEmail) // Pass userEmail to DAO
+    override suspend fun getCartItems(userEmail: String): List<ShoppingCartItem> {
+        return mealDatabase.mealDao().getCartItem(userEmail)
     }
 
     override suspend fun addToCart(item: ShoppingCartItem) {
