@@ -88,7 +88,7 @@ class MealRepositoryImplTest {
     fun `when getCartItems is called and items exist for the user then return cart items`() = runBlocking {
         // Arrange
         val userEmail = "test@example.com"
-        val expectedCartItems = listOf(ShoppingCartItem(id = 1, mealId = 2, name = "Pizza", description = "Delicious pizza", imageUri = "sample_uri", userEmail = userEmail))
+        val expectedCartItems = listOf(ShoppingCartItem(id = 1, mealId = 2, name = "Pizza", description = "Delicious pizza", imageUri = "sample_uri", userEmail = userEmail, dateAdded = "2023-07-01"))
         coEvery { mockMealDao.getCartItem(userEmail) } returns expectedCartItems
 
         // Act
@@ -116,7 +116,7 @@ class MealRepositoryImplTest {
     @Test
     fun `when addToCart is called then add item to cart`() = runBlocking {
         // Arrange
-        val cartItem = ShoppingCartItem(id = 1, mealId = 2, name = "Pizza", description = "Delicious pizza", imageUri = "sample_uri", userEmail = "mahmoud@gmail.com")
+        val cartItem = ShoppingCartItem(id = 1, mealId = 2, name = "Pizza", description = "Delicious pizza", imageUri = "sample_uri", userEmail = "mahmoud@gmail.com", dateAdded = "2023-07-01")
         coEvery { mockMealDao.addItemToCart(cartItem) } just Runs
 
         // Act

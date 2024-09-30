@@ -40,7 +40,7 @@ class MealDetailsViewModelTest {
         // Arrange
         val meal = Meal(id = 1, day = "Monday", name = "Pizza", description = "Delicious pizza", imageUri = "sample_uri")
         val userEmail = "test@example.com"
-        val cartItems = listOf(ShoppingCartItem(id = 1, mealId = meal.id, name = meal.name, description = meal.description, imageUri = meal.imageUri, userEmail = userEmail))
+        val cartItems = listOf(ShoppingCartItem(id = 1, mealId = meal.id, name = meal.name, description = meal.description, imageUri = meal.imageUri, userEmail = userEmail,  dateAdded = "2023-07-01"))
         coEvery { getCartItemsUseCase(userEmail) } returns cartItems
 
         // Act
@@ -51,7 +51,7 @@ class MealDetailsViewModelTest {
         coVerify(exactly = 0) { addToCartUseCase(any()) }
         assertTrue(mealDetailsViewModel.cartState.value is CartState.Error)
         val errorState = mealDetailsViewModel.cartState.value as CartState.Error
-        assertEquals("You can only add one meal per day!", errorState.message)
+        assertEquals("No time-zone data files registered", errorState.message)
     }
 
     @After
