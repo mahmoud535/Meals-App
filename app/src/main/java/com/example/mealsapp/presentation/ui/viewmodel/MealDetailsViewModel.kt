@@ -52,6 +52,7 @@ class MealDetailsViewModel @Inject constructor(
             }
         }
     }
+
 }
 
 sealed class CartState {
