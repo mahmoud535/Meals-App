@@ -10,5 +10,6 @@ data class ShoppingCartItem(
     val name: String,
     val description: String,
     val imageUri: String,
-    val userEmail: String
+    val userEmail: String,
+    val dateAdded: String
 )

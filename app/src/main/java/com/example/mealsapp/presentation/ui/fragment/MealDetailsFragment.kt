@@ -12,60 +12,68 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.mealsapp.databinding.FragmentMealDetailsBinding
 import com.example.mealsapp.domain.model.Meal
+import com.example.mealsapp.presentation.ui.base.frgment.BaseFragment
 import com.example.mealsapp.presentation.ui.viewmodel.CartState
 import com.example.mealsapp.presentation.ui.viewmodel.MealDetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MealDetailsFragment : Fragment() {
+class MealDetailsFragment : BaseFragment<FragmentMealDetailsBinding>() {
 
-    private lateinit var binding: FragmentMealDetailsBinding
     private val mealDetailsViewModel: MealDetailsViewModel by viewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentMealDetailsBinding.inflate(layoutInflater)
-        actions()
-        return binding.root
-    }
+    override fun onFragmentReady(savedInstanceState: Bundle?) {}
 
-    private fun actions(){
-        setupUI()
-        setupObservers()
-    }
-
-    private fun setupUI() {
+    override fun setupListener() {
         val meal = getMealFromArgs()
-        binding.apply {
-            txtTitle.text = meal.name
-            txtDes.text = meal.description
-            txtDay.text = meal.day
-            button.setOnClickListener {
-                val userEmail = getUserEmail()
-                mealDetailsViewModel.addToCart(meal, userEmail!!)
-            }
-        }
-        Glide.with(this).load(meal.imageUri).into(binding.imageView)
-    }
-
-    private fun setupObservers() {
-        lifecycleScope.launch {
-            mealDetailsViewModel.cartState.collect { state ->
-                when (state) {
-                    is CartState.Success -> showToast("Meal added to cart!")
-                    is CartState.Error -> showToast(state.message)
-                    CartState.Idle -> {}
-                }
-            }
-        }
+        displayMealDetails(meal)
+        loadMealImage(meal.imageUri)
+        setupAddToCartButton(meal)
     }
 
     private fun getMealFromArgs(): Meal {
         val args = MealDetailsFragmentArgs.fromBundle(requireArguments())
         return args.meal
+    }
+
+    private fun displayMealDetails(meal: Meal) {
+        binding.apply {
+            txtTitle.text = meal.name
+            txtDes.text = meal.description
+            txtDay.text = meal.day
+        }
+    }
+
+    private fun setupAddToCartButton(meal: Meal) {
+        binding.button.setOnClickListener {
+            val userEmail = getUserEmail()
+            mealDetailsViewModel.addToCart(meal, userEmail!!)
+        }
+    }
+
+    private fun loadMealImage(imageUri: String) {
+        Glide.with(this).load(imageUri).into(binding.imageView)
+    }
+
+    override fun setupObservers() {
+        observeCartState()
+    }
+
+    private fun observeCartState() {
+        lifecycleScope.launch {
+            mealDetailsViewModel.cartState.collect { state ->
+                handleCartState(state)
+            }
+        }
+    }
+
+    private fun handleCartState(state: CartState) {
+        when (state) {
+            is CartState.Success -> showToast("Meal added to cart!")
+            is CartState.Error -> showToast(state.message)
+            CartState.Idle -> {}
+        }
     }
 
     private fun showToast(message: String) {

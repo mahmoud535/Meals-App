@@ -9,7 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager2.widget.CompositePageTransformer
@@ -21,6 +23,7 @@ import com.example.mealsapp.domain.model.Meal
 import com.example.mealsapp.presentation.adapter.ImageAdapterAutoImageSlider
 import com.example.mealsapp.presentation.adapter.MealAdapter
 import com.example.mealsapp.presentation.adapter.OnListItemClick
+import com.example.mealsapp.presentation.ui.base.frgment.BaseFragment
 import com.example.mealsapp.presentation.ui.viewmodel.MealsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -28,26 +31,39 @@ import kotlinx.coroutines.launch
 import kotlin.math.abs
 
 @AndroidEntryPoint
-class MealsListFragment : Fragment(), OnListItemClick {
+class MealsListFragment : BaseFragment<FragmentMealsListBinding>(), OnListItemClick {
 
-    private lateinit var binding: FragmentMealsListBinding
     private val mealsViewModel: MealsViewModel by viewModels()
     private var meal: ArrayList<Meal> = ArrayList()
     private val mealAdapter: MealAdapter by lazy { MealAdapter(meal) }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentMealsListBinding.inflate(layoutInflater)
-        actions()
-        return binding.root
+    override fun onFragmentReady(savedInstanceState: Bundle?) {
+        setupRecyclerView()
+        setupViewPager()
     }
 
-    private fun actions() {
-        setupRecyclerView()
-        observeViewModel()
-        setupViewPager()
+    override fun setupObservers() {
+        showLoadingCase()
+        observeMeals()
+        mealsViewModel.loadMealsForCurrentDay()
+    }
+
+    private fun observeMeals() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mealsViewModel.meals.collect { meals ->
+                    updateMealList(meals)
+                    handleLoadingCase()
+                }
+            }
+        }
+    }
+
+    private fun handleLoadingCase() {
+        lifecycleScope.launch {
+            delay(1000)
+            cancelLoadingCase()
+        }
     }
 
     private fun setupRecyclerView() {
@@ -63,23 +79,8 @@ class MealsListFragment : Fragment(), OnListItemClick {
     }
 
     private fun navigateToMealDetails(meal: Meal) {
-        val action =
-            MealsListFragmentDirections.actionNavigationMealsListToMealDetailsFragment(meal)
+        val action = MealsListFragmentDirections.actionNavigationMealsListToMealDetailsFragment(meal)
         findNavController().navigate(action)
-    }
-
-    private fun observeViewModel() {
-        showLoadingCase()
-        lifecycleScope.launchWhenStarted {
-            mealsViewModel.meals.collect { meals ->
-                updateMealList(meals)
-                lifecycleScope.launch {
-                    delay(1000)
-                    cancelLoadingCase()
-                }
-            }
-        }
-        mealsViewModel.loadMealsForCurrentDay()
     }
 
     private fun updateMealList(meals: List<Meal>) {
@@ -154,6 +155,8 @@ class MealsListFragment : Fragment(), OnListItemClick {
         }
         setPageTransformer(transformer)
     }
+
+    override fun setupListener() {}
 
     override fun onPause() {
         super.onPause()

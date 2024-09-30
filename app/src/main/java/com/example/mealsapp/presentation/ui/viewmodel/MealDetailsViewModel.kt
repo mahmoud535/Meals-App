@@ -14,6 +14,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import org.threeten.bp.LocalDate
+
 
 @HiltViewModel
 class MealDetailsViewModel @Inject constructor(
@@ -28,13 +30,17 @@ class MealDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val cartItems = getCartItemsUseCase(userEmail)
-                if (cartItems.isEmpty()) {
+                val currentDate = LocalDate.now().toString()
+                val mealAddedToday = cartItems.any { it.dateAdded == currentDate }
+
+                if (!mealAddedToday) {
                     val cartItem = ShoppingCartItem(
                         mealId = meal.id,
                         name = meal.name,
                         description = meal.description,
                         imageUri = meal.imageUri,
-                        userEmail = userEmail
+                        userEmail = userEmail,
+                        dateAdded = currentDate
                     )
                     addToCartUseCase(cartItem)
                     _cartState.value = CartState.Success
@@ -46,6 +52,7 @@ class MealDetailsViewModel @Inject constructor(
             }
         }
     }
+
 }
 
 sealed class CartState {

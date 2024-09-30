@@ -94,4 +94,35 @@ dependencies {
 
     //dots indicator
     implementation("com.tbuonomo:dotsindicator:5.0")
+
+    //Mockito (Testing)
+    androidTestImplementation(libs.mockito.mockito.core)
+    androidTestImplementation(libs.jetbrains.kotlinx.coroutines.test)
+    androidTestImplementation(libs.mockk.mockk)
+    androidTestImplementation(libs.kotlin.mockito.kotlin)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.runner)
+
+    testImplementation(libs.mockito.mockito.core)
+    testImplementation(libs.jetbrains.kotlinx.coroutines.test)
+    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0")
+    testImplementation(libs.mockk.mockk) // MockK
+    testImplementation(libs.kotlin.mockito.kotlin)
+    testImplementation(libs.truth)
+    testImplementation(libs.junit.jupiter)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.junit.v113)
+    testImplementation(libs.runner.v140)
+    implementation(libs.material.v120)
+
+    // Unit Test
+    testImplementation(libs.junit)
+
+    // Android Test
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation ("com.jakewharton.threetenabp:threetenabp:1.3.1")
+
 }

@@ -10,33 +10,40 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.mealsapp.R
 import com.example.mealsapp.databinding.FragmentAdminLoginBinding
 import com.example.mealsapp.presentation.ui.activity.MainActivity
+import com.example.mealsapp.presentation.ui.base.frgment.BaseFragment
 import com.example.mealsapp.presentation.ui.viewmodel.LoginState
 import com.example.mealsapp.presentation.ui.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class LoginFragment : Fragment() {
+class LoginFragment : BaseFragment<FragmentAdminLoginBinding>() {
 
-    private lateinit var binding: FragmentAdminLoginBinding
     private val loginViewModel: LoginViewModel by viewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentAdminLoginBinding.inflate(layoutInflater)
-        actions()
-        return binding.root
+    override fun onFragmentReady(savedInstanceState: Bundle?) {
+        setupSpinner()
     }
 
-    private fun actions() {
-        setupSpinner()
-        setupObservers()
-        setupLoginButtonListener()
+    override fun setupListener() {
+        binding.loginButton.setOnClickListener { initiateUserLogin() }
+    }
+
+    override fun setupObservers() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                loginViewModel.loginState.collect { state ->
+                    handleLoginState(state)
+                }
+            }
+        }
     }
 
     private fun setupSpinner() {
@@ -46,33 +53,27 @@ class LoginFragment : Fragment() {
         binding.roleSpinner.adapter = adapter
     }
 
-    private fun setupObservers() {
-        lifecycleScope.launchWhenStarted {
-            loginViewModel.loginState.collect{ state ->
-                handleLoginState(state)
-            }
-        }
+    private fun initiateUserLogin() {
+        val email = binding.emailInput.text.toString()
+        val password = binding.passwordInput.text.toString()
+        val selectedRole = binding.roleSpinner.selectedItem.toString()
+        loginUser(email, password, selectedRole)
     }
 
-    private fun setupLoginButtonListener() {
-        binding.loginButton.setOnClickListener {
-            val email = binding.emailInput.text.toString()
-            val password = binding.passwordInput.text.toString()
-            val selectedRole = binding.roleSpinner.selectedItem.toString()
-            if (areFieldsValid(email, password)) {
-                loginViewModel.login(email, password, selectedRole)
-            } else {
-                showToast("Please fill in all fields")
-            }
-        }
+    private fun loginUser(email: String, password: String, selectedRole: String) {
+        if (areFieldsValid(email, password))
+            loginViewModel.login(email, password, selectedRole)
+        else
+            showToast("Please fill in all fields")
     }
 
     private fun handleLoginState(state: LoginState) {
         when (state) {
             is LoginState.Success -> {
                 saveUserEmail(state.email)
-                navigateBasedOnRole(state.role) }
-            is LoginState.Error -> { showToast(state.message) }
+                navigateBasedOnRole(state.role)
+            }
+            is LoginState.Error ->  showToast(state.message)
             LoginState.Idle -> {}
         }
     }
@@ -98,6 +99,5 @@ class LoginFragment : Fragment() {
         editor.putString("user_email", email)
         editor.apply()
     }
-
 }
 

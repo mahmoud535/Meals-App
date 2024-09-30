@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/img4" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_title_Client"
         android:layout_width="0dp"
         android:layout_height="@dimen/_100sdp"
@@ -33,39 +33,28 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <EditText
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/emailInput"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/_38sdp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:background="@drawable/rounded_edittext_register_login"
-        android:ems="10"
-        android:hint="Email"
+        style="@style/EditText"
+        android:hint="@string/Email"
         android:inputType="textEmailAddress"
-        android:paddingLeft="16dp"
-        android:textSize="14dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_title_Client" />
-
-    <EditText
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/passwordInput"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/_38sdp"
+        style="@style/EditText"
         android:layout_marginTop="15dp"
-        android:background="@drawable/rounded_edittext_register_login"
-        android:ems="10"
-        android:hint="Password"
+        android:hint="@string/Password"
         android:inputType="textPassword"
-        android:paddingLeft="16dp"
-        android:textSize="14dp"
+        android:paddingStart="16dp"
         app:layout_constraintEnd_toEndOf="@+id/emailInput"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/emailInput"
         app:layout_constraintTop_toBottomOf="@+id/emailInput" />
-
     <Spinner
         android:id="@+id/roleSpinner"
         android:layout_width="0dp"
@@ -76,24 +65,18 @@
         app:layout_constraintStart_toStartOf="@+id/passwordInput"
         app:layout_constraintTop_toBottomOf="@+id/passwordInput" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/loginButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/Button"
+        android:layout_width="0dp"
         android:layout_gravity="center"
-        android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="30dp"
-        android:background="@drawable/button_background"
-        android:foreground="?attr/selectableItemBackground"
         android:gravity="center"
         android:paddingTop="@dimen/btn_padding"
         android:paddingBottom="@dimen/btn_padding"
         android:text="@string/login"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/btn_textSize"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/emailInput"
+        app:layout_constraintStart_toStartOf="@+id/emailInput"
         app:layout_constraintTop_toBottomOf="@id/roleSpinner" />
 
     <LinearLayout

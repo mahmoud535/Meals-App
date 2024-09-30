@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     android:orientation="vertical"
     android:padding="8dp">
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/action_cart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/mealImageView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_110sdp"
@@ -27,10 +28,10 @@
             android:src="@drawable/img15"
             app:shapeAppearanceOverlay="@style/border" />
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/mealTitleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,7 +44,7 @@
         app:layout_constraintStart_toStartOf="@+id/action_cart"
         app:layout_constraintTop_toBottomOf="@+id/action_cart" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/mealDescriptionTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
